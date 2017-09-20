@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Facebook Login JavaScript Example</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://bootswatch.com/lumen/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    #timeline-wrapper {
+      display: none;
+    }
+    </style>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="assets/fbsdk.js"></script>
+  </head>
+  <body>
+    <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v2.10&appId=1595971680477286";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
+
+      <div id="fb-signout-button" class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true"></div>
+
+      <button id="logout" type="submit" name="button">Signout</button>
+
+      <script type="text/javascript">
+      
+      $('#logout').click(()=>{
+         localStorage.removeItem('fbaccesstoken')
+         window.location.href='index.html'
+       })
+      </script>
+  </body>
+</html>
