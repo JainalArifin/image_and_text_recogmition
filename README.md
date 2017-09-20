@@ -1,0 +1,2 @@
+# image_and_text_recogmition
+image_and_text_recogmition
