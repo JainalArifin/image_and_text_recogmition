@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 
     <script type="text/javascript">
@@ -141,8 +141,15 @@
           e.preventDefault();
 
           $.ajax({
-            method: 'get',
-            url: 'http://localhost:3000/'
+            method: 'post',
+            url: 'http://localhost:3000/users/signin',
+            data: {
+              username: $('#login-form').find('input[name="username"]').val(),
+              password: $('#login-form').find('input[name="password"]').val()
+            }
+          })
+          .done(function(data) {
+            console.log(data);
           })
 
         });

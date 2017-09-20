@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#register-form').on('submit', function(e){
+          e.preventDefault();
+
+          $.ajax({
+            method: 'post',
+            url: 'http://localhost:3000/users/signup',
+            data: {
+              name: $('#register-form').find('input[name="name"]').val(),
+              email: $('#register-form').find('input[name="email"]').val(),
+              username: $('#register-form').find('input[name="username"]').val(),
+              password: $('#register-form').find('input[name="password"]').val()
+            }
+          })
+          .done(function(data) {
+            console.log(data);
+          })
+
+        });
+      });
+    </script>
+
+  </head>
+  <body>
+    <form id="register-form">
+      <input type="text" name="name" placeholder="name">
+      <input type="email" name="email" placeholder="email">
+      <input type="text" name="username" placeholder="username">
+      <input type="password" name="password" placeholder="password">
+      <button type="submit" name="register">submit</button>
+    </form>
+  </body>
+</html>
