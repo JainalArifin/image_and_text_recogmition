@@ -10,7 +10,11 @@
         console.log('ini remove');
         $.ajax({
           method: 'delete',
-          url: `http://localhost:3000/kendaraan/${id}`
+          url: `http://localhost:3000/kendaraan/${id}`,
+          headers: {
+            token: localStorage.getItem('accesstoken'),
+            fbaccesstoken: localStorage.getItem('fbaccesstoken')
+          }
         })
         .done(response => {
           console.log(response);
@@ -21,17 +25,22 @@
       function getOneKendaraan (id) {
         $.ajax({
           method: 'get',
-          url: `http://localhost:3000/kendaraan/${id}`
+          url: `http://localhost:3000/kendaraan/${id}`,
+          headers: {
+            token: localStorage.getItem('accesstoken'),
+            fbaccesstoken: localStorage.getItem('fbaccesstoken')
+          }
         })
         .done(response => {
           console.log(response);
+          $('#kendaraan-edit-div').empty()
           $('#kendaraan-edit-div').append(`
             <br>
             <form id="kendaraan-edit-form">
               <input style="display:none" disabled type="text" name="id" placeholder="id" required value="${response._id}">
               <input type="text" name="jenis" placeholder="jenis kendaraan" required value="${response.jenis}">
               <input type="text" name="nopolisi" placeholder="nomor polisi" required value="${response.nopolisi}">
-              <button type="submit" name="update-kendaraan-button">update</button>
+              <button type="button" name="update-kendaraan-button" onclick="updateKendaraan('${response._id}')">update</button>
             </form>
             `)
 
@@ -39,10 +48,34 @@
         })
       }
 
+      function updateKendaraan (id) {
+        $.ajax({
+          method: 'put',
+          url: `http://localhost:3000/kendaraan/${id}`,
+          data: {
+            jenis: $('#kendaraan-edit-form').find('input[name="jenis"]').val(),
+            nopolisi: $('#kendaraan-edit-form').find('input[name="nopolisi"]').val()
+          },
+          headers: {
+            token: localStorage.getItem('accesstoken'),
+            fbaccesstoken: localStorage.getItem('fbaccesstoken')
+          }
+        })
+        .done(response => {
+          console.log(response);
+          $('#kendaraan-edit-div').empty()
+          window.location.href="kendaraan.html"
+        })
+      }
+
       $(document).ready(function () {
         $.ajax({
           method: 'get',
-          url: 'http://localhost:3000/kendaraan'
+          url: 'http://localhost:3000/kendaraan',
+          headers: {
+            token: localStorage.getItem('accesstoken'),
+            fbaccesstoken: localStorage.getItem('fbaccesstoken')
+          }
         })
         .done(function (response) {
           console.log(response)
@@ -69,30 +102,14 @@
             data: {
               jenis: $('#kendaraan-form').find('input[name="jenis"]').val(),
               nopolisi: $('#kendaraan-form').find('input[name="nopolisi"]').val()
+            },
+            headers: {
+              token: localStorage.getItem('accesstoken'),
+              fbaccesstoken: localStorage.getItem('fbaccesstoken')
             }
           })
           .done(response => {
             console.log(response);
-            window.location.href="kendaraan.html"
-          })
-        })
-
-        $('#kendaraan-edit-form').on('submit', function(e) {
-          e.preventDefault();
-          let id = $('#kendaraan-edit-form').find('input[name="id"]').val()
-          console.log(id);
-
-          $.ajax({
-            method: 'put',
-            url: `http://localhost:3000/kendaraan/${id}`,
-            data: {
-              jenis: $('#kendaraan-edit-form').find('input[name="jenis"]').val(),
-              nopolisi: $('#kendaraan-edit-form').find('input[name="nopolisi"]').val()
-            }
-          })
-          .done(response => {
-            console.log(response);
-            $('#kendaraan-edit-div').empty()
             // window.location.href="kendaraan.html"
           })
         })
