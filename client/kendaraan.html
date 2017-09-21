@@ -93,6 +93,10 @@
           }
         })
         .done(function (response) {
+          if (response.,sg == 'unauthenticated') {
+            alert('Autentikasi gagal')
+            window.location.href="index.html"
+          }
           console.log(response)
           let no = 1
           response.forEach(kendaraan => {
