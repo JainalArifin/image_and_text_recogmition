@@ -83,7 +83,7 @@
         if (localStorage.getItem('accesstoken') == null) {
           $('#logout-button').hide()
         }
-        
+
         $.ajax({
           method: 'get',
           url: 'http://localhost:3000/kendaraan',
@@ -125,7 +125,7 @@
           })
           .done(response => {
             console.log(response);
-            // window.location.href="kendaraan.html"
+            window.location.href="kendaraan.html"
           })
         })
       })
