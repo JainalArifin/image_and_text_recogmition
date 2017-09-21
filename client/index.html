@@ -5,8 +5,37 @@
     <title></title>
     <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="js/fbsdk.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        if (localStorage.getItem('fbaccesstoken') == null) {
+          $('#fb-logout-button').hide()
+        }
+
+        if (localStorage.getItem('accesstoken') == null) {
+          $('#logout-button').hide()
+        }
+
+        if (localStorage.getItem('fbaccesstoken') == null && localStorage.getItem('accesstoken') == null) {
+          window.location.href="login.html"
+        }
+      })
+
+      function Logout () {
+        localStorage.removeItem('accesstoken')
+        console.log('logged out');
+        document.location.href="login.html"
+      }
+    </script>
   </head>
   <body>
-
+    <h1>ini index</h1>
+    <button id="logout-button" type="button" name="logout-button" onclick="Logout()">logout</button>
+    <button id="fb-logout-button" type="button" name="fb-logout-button" onclick="FBLogout()">fb-logout</button>
+    <ul>
+      <li><a href="kendaraan.html">List Kendaraan</a></li>
+      <li><a href="#!">List User</a></li>
+    </ul>
   </body>
 </html>

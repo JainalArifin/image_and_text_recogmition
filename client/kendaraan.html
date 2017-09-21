@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script type="text/javascript">
+      function removeKendaraan (id) {
+        console.log('ini remove');
+        $.ajax({
+          method: 'delete',
+          url: `http://localhost:3000/kendaraan/${id}`
+        })
+        .done(response => {
+          console.log(response);
+          window.location.href="kendaraan.html"
+        })
+      }
+
+      function getOneKendaraan (id) {
+        $.ajax({
+          method: 'get',
+          url: `http://localhost:3000/kendaraan/${id}`
+        })
+        .done(response => {
+          console.log(response);
+          $('#kendaraan-edit-div').append(`
+            <br>
+            <form id="kendaraan-edit-form">
+              <input style="display:none" disabled type="text" name="id" placeholder="id" required value="${response._id}">
+              <input type="text" name="jenis" placeholder="jenis kendaraan" required value="${response.jenis}">
+              <input type="text" name="nopolisi" placeholder="nomor polisi" required value="${response.nopolisi}">
+              <button type="submit" name="update-kendaraan-button">update</button>
+            </form>
+            `)
+
+          // window.location.href="kendaraan.html"
+        })
+      }
+
+      $(document).ready(function () {
+        $.ajax({
+          method: 'get',
+          url: 'http://localhost:3000/kendaraan'
+        })
+        .done(function (response) {
+          console.log(response)
+          let no = 1
+          response.forEach(kendaraan => {
+            $('#kendaraan-table').find('tbody').append(`
+              <tr>
+                <td>${no++}</td>
+                <td>${kendaraan.jenis}</td>
+                <td>${kendaraan.nopolisi}</td>
+                <td><a href="#!" onclick="removeKendaraan('${kendaraan._id}')">DELETE</a></td>
+                <td><a href="#!" onclick="getOneKendaraan('${kendaraan._id}')">UPDATE</a></td>
+              </tr>
+              `)
+          })
+        })
+
+        $('#kendaraan-form').on('submit', function(e) {
+          e.preventDefault();
+
+          $.ajax({
+            method: 'post',
+            url: 'http://localhost:3000/kendaraan',
+            data: {
+              jenis: $('#kendaraan-form').find('input[name="jenis"]').val(),
+              nopolisi: $('#kendaraan-form').find('input[name="nopolisi"]').val()
+            }
+          })
+          .done(response => {
+            console.log(response);
+            window.location.href="kendaraan.html"
+          })
+        })
+
+        $('#kendaraan-edit-form').on('submit', function(e) {
+          e.preventDefault();
+          let id = $('#kendaraan-edit-form').find('input[name="id"]').val()
+          console.log(id);
+
+          $.ajax({
+            method: 'put',
+            url: `http://localhost:3000/kendaraan/${id}`,
+            data: {
+              jenis: $('#kendaraan-edit-form').find('input[name="jenis"]').val(),
+              nopolisi: $('#kendaraan-edit-form').find('input[name="nopolisi"]').val()
+            }
+          })
+          .done(response => {
+            console.log(response);
+            $('#kendaraan-edit-div').empty()
+            // window.location.href="kendaraan.html"
+          })
+        })
+      })
+    </script>
+
+  </head>
+  <body>
+    <form id="kendaraan-form">
+      <input type="text" name="jenis" placeholder="jenis kendaraan" required>
+      <input type="text" name="nopolisi" placeholder="nomor polisi" required>
+      <button type="submit" name="add-kendaraan-button">add</button>
+    </form>
+    <div id="kendaraan-edit-div">
+      <!-- edit form append here -->
+    </div>
+    <br>
+    <table border="1" id="kendaraan-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Jenis Kendaraan</th>
+          <th>Nomor Polisi</th>
+          <th colspan="2">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- list kendaraan append here -->
+        <!-- <tr>
+          <td>?</td>
+          <td>?</td>
+          <td>?</td>
+          <td><a href="#!">DELETE</a></td>
+          <td><a href="#!">UPDATE</a></td>
+        </tr> -->
+      </tbody>
+    </table>
+  </body>
+</html>
