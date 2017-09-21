@@ -4,8 +4,15 @@
     <meta charset="utf-8">
     <title></title>
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="js/fbsdk.js" charset="utf-8"></script>
 
     <script type="text/javascript">
+      function Logout () {
+        localStorage.removeItem('accesstoken')
+        console.log('logged out');
+        document.location.href="login.html"
+      }
+
       function removeKendaraan (id) {
         console.log('ini remove');
         $.ajax({
@@ -69,6 +76,14 @@
       }
 
       $(document).ready(function () {
+        if (localStorage.getItem('fbaccesstoken') == null) {
+          $('#fb-logout-button').hide()
+        }
+
+        if (localStorage.getItem('accesstoken') == null) {
+          $('#logout-button').hide()
+        }
+        
         $.ajax({
           method: 'get',
           url: 'http://localhost:3000/kendaraan',
@@ -147,5 +162,8 @@
         </tr> -->
       </tbody>
     </table>
+    <br>
+    <button id="logout-button" type="button" name="logout-button" onclick="Logout()">logout</button>
+    <button id="fb-logout-button" type="button" name="fb-logout-button" onclick="FBLogout()">fb-logout</button>
   </body>
 </html>
