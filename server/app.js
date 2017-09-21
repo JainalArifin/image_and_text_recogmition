@@ -9,6 +9,7 @@ var cors = require('cors')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+<<<<<<< HEAD
 var kendaraan = require('./routes/kendaraan')
 
 var app = express();
@@ -19,6 +20,13 @@ mongoose.connect('mongodb://localhost/users', (err)=>{
   if(!err) console.log('Database sudah terhubung');
   else console.log('Database sudah terhubungn');
 })
+=======
+var vision = require('./routes/vision');
+
+var app = express();
+
+mongoose.connect('mongodb://localhost/vision')
+>>>>>>> a54d94d8f127f11f6d44473c58fd2f6545e120e1
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,7 +42,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+<<<<<<< HEAD
 app.use('/kendaraan', kendaraan)
+=======
+app.use('/vision', vision);
+
+>>>>>>> a54d94d8f127f11f6d44473c58fd2f6545e120e1
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
