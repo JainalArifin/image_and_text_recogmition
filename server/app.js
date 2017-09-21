@@ -8,13 +8,11 @@ var mongoose = require('mongoose')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var vision = require('./routes/vision');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost/users', (err)=>{
-  if(!err) console.log('Database sudah terhubung');
-  else console.log('Database sudah terhubungn');
-})
+mongoose.connect('mongodb://localhost/vision')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/vision', vision);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
