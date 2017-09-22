@@ -3,16 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="js/fbsdk.js" charset="utf-8"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-      function Logout () {
-        localStorage.removeItem('accesstoken')
-        console.log('logged out');
-        document.location.href="login.html"
-      }
-
       function removeKendaraan (id) {
         console.log('ini remove');
         $.ajax({
@@ -46,7 +42,7 @@
             <form id="kendaraan-edit-form">
               <input style="display:none" disabled type="text" name="id" placeholder="id" required value="${response._id}">
               <input type="text" name="jenis" placeholder="jenis kendaraan" required value="${response.jenis}">
-              <input type="text" name="nopolisi" placeholder="nomor polisi" required value="${response.nopolisi}">
+              <input type="text" name="nomor" placeholder="nomor polisi" required value="${response.nomor}">
               <button type="button" name="update-kendaraan-button" onclick="updateKendaraan('${response._id}')">update</button>
             </form>
             `)
@@ -61,7 +57,7 @@
           url: `http://localhost:3000/kendaraan/${id}`,
           data: {
             jenis: $('#kendaraan-edit-form').find('input[name="jenis"]').val(),
-            nopolisi: $('#kendaraan-edit-form').find('input[name="nopolisi"]').val()
+            nomor: $('#kendaraan-edit-form').find('input[name="nomor"]').val()
           },
           headers: {
             token: localStorage.getItem('accesstoken'),
@@ -76,14 +72,6 @@
       }
 
       $(document).ready(function () {
-        if (localStorage.getItem('fbaccesstoken') == null) {
-          $('#fb-logout-button').hide()
-        }
-
-        if (localStorage.getItem('accesstoken') == null) {
-          $('#logout-button').hide()
-        }
-
         $.ajax({
           method: 'get',
           url: 'http://localhost:3000/kendaraan',
@@ -94,27 +82,18 @@
         })
         .done(function (response) {
           console.log(response)
-          if (response.msg == 'unauthenticated') {
-            alert('Anda belum login')
-            window.location.href="index.html"
-          }
-          else {
-            let no = 1
-            response.forEach(kendaraan => {
-              $('#kendaraan-table')
-              .find('tbody')
-              .append(`
-                <tr>
+          let no = 1
+          response.forEach(kendaraan => {
+            $('#kendaraan-table').find('tbody').append(`
+              <tr>
                 <td>${no++}</td>
                 <td>${kendaraan.jenis}</td>
-                <td>${kendaraan.nopolisi}</td>
+                <td>${kendaraan.nomor}</td>
                 <td><a href="#!" onclick="removeKendaraan('${kendaraan._id}')">DELETE</a></td>
                 <td><a href="#!" onclick="getOneKendaraan('${kendaraan._id}')">UPDATE</a></td>
-                </tr>
-                `
-              )
-            })
-          }
+              </tr>
+              `)
+          })
         })
 
         $('#kendaraan-form').on('submit', function(e) {
@@ -125,7 +104,7 @@
             url: 'http://localhost:3000/kendaraan',
             data: {
               jenis: $('#kendaraan-form').find('input[name="jenis"]').val(),
-              nopolisi: $('#kendaraan-form').find('input[name="nopolisi"]').val()
+              nomor: $('#kendaraan-form').find('input[name="nomor"]').val()
             },
             headers: {
               token: localStorage.getItem('accesstoken'),
@@ -142,12 +121,10 @@
 
   </head>
   <body>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-    </ul>
+    <a href="index.html">Back</a><br><br>
     <form id="kendaraan-form">
       <input type="text" name="jenis" placeholder="jenis kendaraan" required>
-      <input type="text" name="nopolisi" placeholder="nomor polisi" required>
+      <input type="text" name="nomor" placeholder="nomor polisi" required>
       <button type="submit" name="add-kendaraan-button">add</button>
     </form>
     <div id="kendaraan-edit-div">
@@ -174,8 +151,6 @@
         </tr> -->
       </tbody>
     </table>
-    <br>
-    <button id="logout-button" type="button" name="logout-button" onclick="Logout()">logout</button>
-    <button id="fb-logout-button" type="button" name="fb-logout-button" onclick="FBLogout()">fb-logout</button>
+
   </body>
 </html>

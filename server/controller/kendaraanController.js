@@ -13,7 +13,7 @@ const getallkendaraan = (req,res) => {
 const insertkendaraan = (req,res) => {
   kendaraan.create({
     jenis: req.body.jenis,
-    nopolisi: req.body.nopolisi
+    nomor: req.body.nomor
   })
   .then(datakendaraan => {
     res.send(datakendaraan)
@@ -28,7 +28,7 @@ const updatekendaraan = (req,res) => {
     _id: req.params.id
   },{
     jenis: req.body.jenis,
-    nopolisi: req.body.nopolisi
+    nomor: req.body.nomor
   })
   .then(kendaraanupdate => {
     res.send(kendaraanupdate)
