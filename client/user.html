@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="js/fbsdk.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+      $(document).ready(() => {
+        if (localStorage.getItem('fbaccesstoken') == null) {
+          $('#fb-logout-button').hide()
+        }
+
+        if (localStorage.getItem('accesstoken') == null) {
+          $('#logout-button').hide()
+        }
+
+        // get all users info ==================================================
+        $.ajax({
+          method: 'get',
+          url: 'http://localhost:3000/users',
+          headers: {
+            token: localStorage.getItem('accesstoken'),
+            fbaccesstoken: localStorage.getItem('fbaccesstoken')
+          }
+        })
+        .done(function (response) {
+          console.log(response)
+          let no = 1
+          response.forEach(user => {
+            $('#users-table').find('tbody').append(`
+              <tr>
+                <td>${no++}</td>
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+                <td><a href="#!" onclick="removeUser('${user._id}')">DELETE</a></td>
+                <td><a href="#!" onclick="getOneUser('${user._id}')">UPDATE</a></td>
+              </tr>
+              `)
+          })
+        })
+      })
+    </script>
+
+  </head>
+  <body>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+    </ul>
+    <table id="users-table" border="1">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th colspan="2">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- users data append here -->
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <title></title>
+
+    <script type="text/javascript">
+      $(document).ready(() => {
+        if (localStorage.getItem('fbaccesstoken') == null && localStorage.getItem('accesstoken') == null) {
+          window.location.href="login.html"
+        }
+
+        if (typeof localStorage.getItem('accesstoken') == 'Object') {
+          console.log('bukan string');
+          localStorage.removeItem('accesstoken')
+          window.location.href="login.html"
+        }
+      })
+    </script>
+
+  </head>
+  <body>
+    <a href="index.html">Back</a><br><br>
+    <form id="upload-form">
+      <input type="text" name="image_text">
+      <button type="submit">submit</button>
+    </form>
+
+    <H1 id="result"></H1>
+
+    <script type="text/javascript">
+
+           $('#upload-form').on('submit', function(e){
+             e.preventDefault();
+
+             $.ajax({
+               method: 'post',
+               url: 'http://localhost:3000/vision',
+               data: {
+                 image_text: $('#upload-form').find('input[name="image_text"]').val()
+               },
+               success: function (data) {
+                 console.log(data)
+                 $('#result').empty()
+                 $('#result').append(data.msg)
+               },
+               error: function (err) {
+                 console.log(err)
+               }
+             })
+           });
+
+    </script>
+  </body>
+</html>

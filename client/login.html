@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="js/fbsdk.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        if (localStorage.getItem('fbaccesstoken') != null || localStorage.getItem('accesstoken') != null) {
+          window.location.href="index.html"
+        }
+
+        $('#login-form').on('submit', function(e){
+          e.preventDefault();
+
+          $.ajax({
+            method: 'post',
+            url: 'http://localhost:3000/users/signin',
+            data: {
+              username: $('#login-form').find('input[name="username"]').val(),
+              password: $('#login-form').find('input[name="password"]').val()
+            }
+          })
+          .done(function(data) {
+            console.log(data);
+            if (data.msg == 'login success') {
+              localStorage.setItem('accesstoken', data.data)
+              document.location.href="index.html"
+            }
+            else if (data.msg == 'password incorrect') {
+              alert(data.msg)
+              document.location.href="index.html"
+            }
+            else if (data.msg == 'username not found') {
+              alert(data.msg)
+              document.location.href="index.html"
+            }
+          })
+        });
+      });
+    </script>
+
+  </head>
+  <body>
+
+    <form id="login-form">
+      <input type="text" name="username" placeholder="username" required>
+      <input type="password" name="password" placeholder="password" required>
+      <button type="submit" name="login">login</button>
+    </form>
+    <br>
+
+    <!-- <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v2.10&appId=125519858191028";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    or <div class="fb-login-button" data-max-rows="1" data-size="medium" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div> -->
+
+    <button id="login-btn" class="btn btn-primary" type="button" onclick="FBLogin()">
+      <i class="fa fa-facebook-official"></i> Login With Facebook
+    </button>
+
+    <br><br>
+    Don't have account? <a href="register.html">Register Here</a>
+
+  </body>
+</html>

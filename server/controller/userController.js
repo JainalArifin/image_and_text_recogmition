@@ -39,15 +39,28 @@ const userLogin = (req, res) =>{
       username: req.body.username
   })
   .then((dataUser) => {
-    if( bcrypt.compareSync(req.body.password, dataUser.password)){
-      var token = jwt.sign({
-        id: dataUser.id,
-        name: dataUser.name
-      },process.env.SECRET)
-      res.send(token)
-    }else(
-      res.send("password anda salah !!!")
-    )
+    console.log(dataUser);
+    if (dataUser == null) {
+      res.send({
+        msg: 'username not found'
+      })
+    }
+    else {
+      if( bcrypt.compareSync(req.body.password, dataUser.password)){
+        var token = jwt.sign({
+          id: dataUser.id,
+          name: dataUser.name
+        },process.env.SECRET)
+        res.send({
+          msg: 'login success',
+          data: token
+        })
+      }else(
+        res.send({
+          msg: 'password incorrect'
+        })
+      )
+    }
   })
   .catch((err) => {
     res.send(err)
