@@ -93,23 +93,28 @@
           }
         })
         .done(function (response) {
-          if (response.,sg == 'unauthenticated') {
-            alert('Autentikasi gagal')
+          console.log(response)
+          if (response.msg == 'unauthenticated') {
+            alert('Anda belum login')
             window.location.href="index.html"
           }
-          console.log(response)
-          let no = 1
-          response.forEach(kendaraan => {
-            $('#kendaraan-table').find('tbody').append(`
-              <tr>
+          else {
+            let no = 1
+            response.forEach(kendaraan => {
+              $('#kendaraan-table')
+              .find('tbody')
+              .append(`
+                <tr>
                 <td>${no++}</td>
                 <td>${kendaraan.jenis}</td>
                 <td>${kendaraan.nopolisi}</td>
                 <td><a href="#!" onclick="removeKendaraan('${kendaraan._id}')">DELETE</a></td>
                 <td><a href="#!" onclick="getOneKendaraan('${kendaraan._id}')">UPDATE</a></td>
-              </tr>
-              `)
-          })
+                </tr>
+                `
+              )
+            })
+          }
         })
 
         $('#kendaraan-form').on('submit', function(e) {

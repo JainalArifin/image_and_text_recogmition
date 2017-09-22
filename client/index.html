@@ -20,6 +20,12 @@
         if (localStorage.getItem('fbaccesstoken') == null && localStorage.getItem('accesstoken') == null) {
           window.location.href="login.html"
         }
+
+        if (typeof localStorage.getItem('accesstoken') != 'String') {
+          console.log('bukan string');
+          localStorage.removeItem('accesstoken')
+          window.location.href="login.html"
+        }
       })
 
       function Logout () {
