@@ -5,7 +5,7 @@ const login = require('../helper/jwt')
 
 
 router.post('/signup', userController.createUser)
-router.post('/signin', userController.userLogin)
+router.post('/signin', login.islogIn, userController.userLogin)
 
 router.get('/', login.islogIn, userController.findAllUsers)
 router.get('/:id', login.islogIn, userController.findByIdUser)

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var cont = require('../controller/vision')
 var vision = require('@google-cloud/vision')
-var modelMobil = require('../models/mobil')
+var modelMobil = require('../models/kendaraan')
 // var mongoose = require('mongoose')
 // var nomorModel = require('../models/mobil')
 
@@ -11,7 +11,8 @@ var visionClient = vision({
   keyFilename: 'My-First-Project-0fbc8a8e9941.json'
 })
 
-router.post('/addCar', cont.addCar)
+// router.post('/addCar', cont.addCar)
+// router.get('/getcar',cont.getAll)
 
 router.post('/', cont.showText, (req, res) => {
   visionClient.batchAnnotateImages({requests: req.vision})
@@ -63,11 +64,5 @@ router.post('/', cont.showText, (req, res) => {
       console.error(err);
   })
 })
-
-router.get('/getcar',cont.getCar)
-
-// router.post('/text',cont.showText,(req,res)=>{
-//
-// })
 
 module.exports = router;

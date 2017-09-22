@@ -5,28 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose')
-var cors = require('cors')
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-// <<<<<<< HEAD
+
 var vision = require('./routes/vision');
-//
-// var app = express();
-//
-// mongoose.connect('mongodb://localhost/vision')
-// =======
-var kendaraan = require('./routes/kendaraan')
+var users = require('./routes/users');
 
 var app = express();
 
-app.use(cors())
-
-mongoose.connect('mongodb://localhost/users', (err)=>{
-  if(!err) console.log('Database sudah terhubung');
-  else console.log('Database sudah terhubungn');
-})
-// >>>>>>> 630187ecc10a5331823da803d5554eb69c301166
+mongoose.connect('mongodb://localhost/vision')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,14 +26,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
-// <<<<<<< HEAD
 app.use('/vision', vision);
-
-// =======
-app.use('/kendaraan', kendaraan)
-// >>>>>>> 630187ecc10a5331823da803d5554eb69c301166
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

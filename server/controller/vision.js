@@ -1,5 +1,5 @@
 var vision = require('@google-cloud/vision')
-var nomorModel = require('../models/mobil')
+var nomorModel = require('../models/kendaraan')
 // var mongoose = require('mongoose')
 
 var visionclient = vision({
@@ -31,30 +31,39 @@ var showText = (req,res, next)=>{
  next()
 }
 
-var addCar = (req, res) => {
-  nomorModel.create({
-    nomor:req.body.nomor
-  })
-  .then(dataMobil=>{
-    res.send(dataMobil)
-  })
-  .catch((err) => {
-    res.send(err)
-  })
-}
+// var addCar = (req, res) => {
+//   nomorModel.create({
+//     nomor:req.body.nomor
+//   })
+//   .then(dataMobil=>{
+//     res.send(dataMobil)
+//   })
+//   .catch((err) => {
+//     res.send(err)
+//   })
+// }
+//
+// var getCar = (req,res)=>{
+//   nomorModel.find({},function(err,result){
+//     if(!err){
+//       res.send(result)
+//     }else{
+//       res.send(err)
+//     }
+//   })
+// }
 
-var getCar = (req,res)=>{
-  nomorModel.find({},function(err,result){
-    if(!err){
-      res.send(result)
-    }else{
-      res.send(err)
-    }
-  })
-}
+// var getAll = (req,res)=>{
+//   nomorModel.find({},function(err,result){
+//     if(!err){
+//       res.send(result)
+//     }
+//   })
+// }
 
 module.exports = {
   showText,
-  addCar,
-  getCar
+  //addCar,
+  //getCar,
+//  getAll
 }
