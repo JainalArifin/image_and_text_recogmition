@@ -21,7 +21,7 @@
           window.location.href="login.html"
         }
 
-        if (typeof localStorage.getItem('accesstoken') != 'String') {
+        if (typeof localStorage.getItem('accesstoken') == 'Object') {
           console.log('bukan string');
           localStorage.removeItem('accesstoken')
           window.location.href="login.html"
@@ -39,7 +39,7 @@
     <h1>ini index</h1>
     <ul>
       <li><a href="kendaraan.html">List Kendaraan</a></li>
-      <li><a href="#!">List User</a></li>
+      <!-- <li><a href="user.html">List User</a></li> -->
     </ul>
     <button id="logout-button" type="button" name="logout-button" onclick="Logout()">logout</button>
     <button id="fb-logout-button" type="button" name="fb-logout-button" onclick="FBLogout()">fb-logout</button>

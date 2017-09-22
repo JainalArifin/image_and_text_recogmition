@@ -26,16 +26,21 @@
           })
           .done(function(data) {
             console.log(data);
-            localStorage.setItem('accesstoken', data)
-            document.location.href="index.html"
+            if (data.msg == 'login success') {
+              localStorage.setItem('accesstoken', data.data)
+              document.location.href="index.html"
+            }
+            else if (data.msg == 'password incorrect') {
+              alert(data.msg)
+              document.location.href="index.html"
+            }
+            else if (data.msg == 'username not found') {
+              alert(data.msg)
+              document.location.href="index.html"
+            }
           })
         });
       });
-
-      function reload () {
-        window.location.href="index.html"
-        window.location.href="index.html"
-      }
     </script>
 
   </head>
