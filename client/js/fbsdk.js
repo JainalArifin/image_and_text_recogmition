@@ -30,16 +30,17 @@ function statusChangeCallback (response) {
   }
 }
 
-// function FBLogin () {
-//   FB.login(function(response) {
-//     console.log('fblogin response ',response)
-//     if (response.authResponse) {
-//       localStorage.setItem('fbaccesstoken', response.authResponse.accessToken)
-//     } else {
-//       console.log('User cancelled login or did not fully authorize.');
-//     }
-//   }, {scope: 'public_profile,email'});
-// }
+function FBLogin () {
+  FB.login(function(response) {
+    console.log('fblogin response ',response)
+    if (response.authResponse) {
+      localStorage.setItem('fbaccesstoken', response.authResponse.accessToken)
+      window.location.href='index.html'
+    } else {
+      console.log('User cancelled login or did not fully authorize.');
+    }
+  }, {scope: 'public_profile,email'});
+}
 
 function FBLogout () {
   // FB.logout(function(response) {

@@ -7,6 +7,21 @@
       integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
       crossorigin="anonymous"></script>
     <title></title>
+
+    <script type="text/javascript">
+      $(document).ready(() => {
+        if (localStorage.getItem('fbaccesstoken') == null && localStorage.getItem('accesstoken') == null) {
+          window.location.href="login.html"
+        }
+
+        if (typeof localStorage.getItem('accesstoken') == 'Object') {
+          console.log('bukan string');
+          localStorage.removeItem('accesstoken')
+          window.location.href="login.html"
+        }
+      })
+    </script>
+
   </head>
   <body>
     <a href="index.html">Back</a><br><br>
